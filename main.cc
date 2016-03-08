@@ -56,26 +56,53 @@ public:
         return *this;
     }
 };
+
 template<typename T>
 class Matrix44 {
-    public:
-        Matrix44() {}
-        //Access Operators to be able to access the matrix directly using bracket notation
-        const T* operator [] (uint8_t i) const { return m[i]; } 
-        T* operator [] (uint8_t i) { return m[i]; } 
-        //Initialize the matrix using coefficients of the identity matrix
-        T m[4][4] = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
-        Matrix44 operator * (const Matrix44& rhs) const {
-            Matrix44 mult;
-            for (uint8_t i = 0; i <4; i++) {
-                for (uint8_t j = 0; i < 4; i++) {
-                    mult[i][j] = m[i][0] * rhs[0][j] + 
-                         m[i][1] * rhs[1][j] + 
-                         m[i][2] * rhs[2][j] + 
-                         m[i][3] * rhs[3][j];
-                }
+public:
+
+    Matrix44() {
+    }
+    //Access Operators to be able to access the matrix directly using bracket notation
+
+    const T* operator[](uint8_t i) const {
+        return m[i];
+    }
+
+    T* operator[](uint8_t i) {
+        return m[i];
+    }
+    //Initialize the matrix using coefficients of the identity matrix
+    T m[4][4] = {
+        {1, 0, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 1, 0},
+        {0, 0, 0, 1}};
+
+    Matrix44 operator*(const Matrix44& rhs) const {
+        Matrix44 mult;
+        for (uint8_t i = 0; i < 4; i++) {
+            for (uint8_t j = 0; i < 4; i++) {
+                mult[i][j] = m[i][0] * rhs[0][j] +
+                        m[i][1] * rhs[1][j] +
+                        m[i][2] * rhs[2][j] +
+                        m[i][3] * rhs[3][j];
             }
         }
+    }
+
+    void multVecMatrix(const Vec3<T> &src, Vec3<T> &dst) const {
+        dst.x = src.x * m[0][0] + src.y * m[1][0] + src.z * m[2][0] + m[3][0];
+        dst.y = src.x * m[0][1] + src.y * m[1][1] + src.z * m[2][1] + m[3][1];
+        dst.z = src.x * m[0][2] + src.y * m[1][2] + src.z * m[2][2] + m[3][2];
+        T w = src.x * m[0][3] + src.y * m[1][3] + src.z * m[2][3] + m[3][3];
+        if (w != 1 && w != 0) {
+            dst.x = dst.x / w;
+            dst.y = dst.y / w;
+            dst.z = dst.z / w;
+        }
+    }
 };
+
 int main() {
 }
