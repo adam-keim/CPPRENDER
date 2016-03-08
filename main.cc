@@ -17,6 +17,15 @@ class Vec3 {
         T length() {
             return sqrt(x*x+y*y+z*z);
         }
+        Vec3<T>& normalize()
+        {
+            T len = length();
+            if (len > 0) {
+                T invLen = 1 / len;
+                x *= invLen, y *= invLen, z *= invLen ;
+            }
+            return *this;
+        }
 };
 int main () {
 }
