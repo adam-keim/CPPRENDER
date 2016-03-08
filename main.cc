@@ -56,6 +56,16 @@ public:
         return *this;
     }
 };
-
+template<typename T>
+class Matrix44 {
+    public:
+        Matrix44() {}
+        //Access Operators to be able to access the matrix directly using bracket notation
+        const T* operator [] (uint8_t i) const { return m[i]; } 
+        T* operator [] (uint8_t i) { return m[i]; } 
+        //Initialize the matrix using coefficients of the identity matrix
+        T m[4][4] = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
+        
+};
 int main() {
 }
