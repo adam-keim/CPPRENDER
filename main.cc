@@ -77,7 +77,8 @@ public:
         {1, 0, 0, 0},
         {0, 1, 0, 0},
         {0, 0, 1, 0},
-        {0, 0, 0, 1}};
+        {0, 0, 0, 1}
+    };
 
     Matrix44 operator*(const Matrix44& rhs) const {
         Matrix44 mult;
@@ -102,7 +103,21 @@ public:
             dst.z = dst.z / w;
         }
     }
+
+    void multDirMatrix(const Vec3<T> &src, Vec3<T> &dst) const {
+        dst.x = src.x * m[0][0] + src.y * m[1][0] + src.z * m[2][0];
+        dst.y = src.x * m[0][1] + src.y * m[1][1] + src.z * m[2][1];
+        dst.z = src.x * m[0][2] + src.y * m[1][2] + src.z * m[2][2];
+    }
 };
 
 int main() {
+    Vec3<int> v1(8, 5, 1);
+    Vec3<int> v2(4, 5, 6);
+    Matrix44<int> m1;
+    m1[0][0] = 2;
+    m1[1][1] = 2;
+    m1[2][2] = 2;
+    m1.multVecMatrix(v1, v2);
+    cout << m1[0][4];
 }
