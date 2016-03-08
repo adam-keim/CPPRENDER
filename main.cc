@@ -1,5 +1,6 @@
 #include <cstdlib> 
-#include <cstdio> 
+#include <cstdio>
+#include <math.h>
 #include <iostream> 
 #include <iomanip> 
  
