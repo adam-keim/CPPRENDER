@@ -149,14 +149,6 @@ public:
   
     static void multiply(const Matrix44<T> &a, const Matrix44& b, Matrix44 &c)
     {
-#if 0
-        for (uint8_t i = 0; i < 4; ++i) {
-            for (uint8_t j = 0; j < 4; ++j) {
-                c[i][j] = a[i][0] * b[0][j] + a[i][1] * b[1][j] +
-                    a[i][2] * b[2][j] + a[i][3] * b[3][j];
-            }
-        }
-#else
 
         const T * __restrict ap = &a.x[0][0];
         const T * __restrict bp = &b.x[0][0];
@@ -209,16 +201,6 @@ public:
     // \brief return a transposed copy of the current matrix as a new matrix
     Matrix44 transposed() const
     {
-#if 0
-        Matrix44 t;
-        for (uint8_t i = 0; i < 4; ++i) {
-            for (uint8_t j = 0; j < 4; ++j) {
-                t[i][j] = x[j][i];
-            }
-        }
-
-        return t;
-#else
         return Matrix44 (x[0][0],
                          x[1][0],
                          x[2][0],
@@ -235,7 +217,6 @@ public:
                          x[1][3],
                          x[2][3],
                          x[3][3]);
-#endif
     }
 
     // \brief transpose itself
@@ -427,19 +408,3 @@ typedef Matrix44<float> Matrix44f;
 //
 // 0.707107 -0.331295 0.624695 0 0 0.883452 0.468521 0 -0.707107 -0.331295 0.624695 0 0 0 -6.404043 1
 //[/comment]
-#if 0
-int main(int argc, char **argv)
-{
-    Vec3f v(0, 1, 2);
-    std::cerr << v << std::endl;
-    Matrix44f a, b, c;
-    c = a * b;
-
-    Matrix44f d(0.707107, 0, -0.707107, 0, -0.331295, 0.883452, -0.331295, 0, 0.624695, 0.468521, 0.624695, 0, 4.000574, 3.00043, 4.000574, 1);
-    std::cerr << d << std::endl;
-    d.invert();
-    std::cerr << d << std::endl;
-
-    return 0;
-}
-#endif
