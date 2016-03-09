@@ -25,6 +25,9 @@ bool computePixelCoordinates(
     Vec2f pNdc;
     pNdc.x = (pScreen.x + canvasWidth/2)/canvasWidth;
     pNdc.y = (pScreen.y + canvasHeight/2)/canvasHeight;
+    
+    pRaster.x = floor(pNdc.x * imageWidth);
+    pRaster.y = floor(pNdc.x * imageHeight);
     return true;
 }
 int main(){
