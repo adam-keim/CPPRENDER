@@ -25,8 +25,7 @@
 *.exe
 *.out
 *.app
-<<<<<<< HEAD
-=======
+
 
 #Config, Built, and Dist Versions
 build/
