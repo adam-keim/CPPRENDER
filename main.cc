@@ -210,7 +210,7 @@ bool computePixelCoordinates(
     pNdc.y = (pScreen.y + canvasHeight / 2) / canvasHeight;
     //Convert to Raster
     pRaster.x = floor(pNdc.x * imageWidth);
-    pRaster.y = floor(pNdc.y * imageHeight);
+    pRaster.y = floor((1-pNdc.y) * imageHeight);
     return true;
 }
 
