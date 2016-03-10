@@ -25,9 +25,3 @@
 *.exe
 *.out
 *.app
-
-#Config, Built, and Dist Versions
-build/
-nbbuild/
-dist/
-nbproject/
