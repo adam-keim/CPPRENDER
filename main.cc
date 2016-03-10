@@ -210,7 +210,7 @@ bool computePixelCoordinates(
     pNdc.y = (pScreen.y + canvasHeight / 2) / canvasHeight;
     //Convert to Raster
     pRaster.x = floor(pNdc.x * imageWidth);
-    pRaster.y = floor(pNdc.x * imageHeight);
+    pRaster.y = floor(pNdc.y * imageHeight);
     return true;
 }
 
@@ -223,12 +223,20 @@ int main() {
     float canvasWidth = 2, canvasHeight = 2;
     uint32_t imageWidth = 512, imageHeight = 512;
     ofs << "<svg version=\"1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns=\"http://www.w3.org/2000/svg\" height=\"512\" width=\"512\">" << std::endl;
-    for (uint8_t i = 0; i < numTris; i++) {
+    for (uint32_t i = 0; i < numTris; ++i) {
         const Vec3f &world0 = verts[tris[i * 3]];
         const Vec3f &world1 = verts[tris[i * 3 + 1]];
         const Vec3f &world2 = verts[tris[i * 3 + 2]];
-        Vec2f rc0, rc1, rc2;
-
+        Vec2i rc0, rc1, rc2;
+        computePixelCoordinates(world0, WtC, canvasWidth, canvasHeight, imageWidth, imageHeight, rc0);
+        computePixelCoordinates(world1, WtC, canvasWidth, canvasHeight, imageWidth, imageHeight, rc1);
+        computePixelCoordinates(world2, WtC, canvasWidth, canvasHeight, imageWidth, imageHeight, rc2);
+        std::cout << rc0 << rc1 << rc2;
+        ofs << "<line x1=\"" << rc0.x << "\" y1=\"" << rc0.y << "\" x2=\"" << rc1.x << "\" y2=\"" << rc1.y << "\" style=\"stroke:rgb(0,0,0);stroke-width:1\" />\n";
+        ofs << "<line x1=\"" << rc1.x << "\" y1=\"" << rc1.y << "\" x2=\"" << rc2.x << "\" y2=\"" << rc2.y << "\" style=\"stroke:rgb(0,0,0);stroke-width:1\" />\n";
+        ofs << "<line x1=\"" << rc2.x << "\" y1=\"" << rc2.y << "\" x2=\"" << rc0.x << "\" y2=\"" << rc0.y << "\" style=\"stroke:rgb(0,0,0);stroke-width:1\" />\n";
     }
+    ofs << "</svg>";
+    ofs.close();
     return 0;
 }
