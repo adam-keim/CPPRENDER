@@ -143,8 +143,10 @@ bool computePixelCoordinates(
 }
 
 int main() {
+    //This matrix was outputted using the blender console
+    Matrix44f cameraToWorld(0.871214, 0, -0.490904, 0, -0.192902, 0.919559, -0.342346, 0, 0.451415, 0.392953, 0.801132, 0, 14.777467, 29.361945, 27.993464, 1); 
     std::ofstream ofs;
-    ofs.open('./output.svg');
-    
+    ofs.open("./output.svg");
+    ofs << "<svg version=\"1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns=\"http://www.w3.org/2000/svg\" height=\"512\" width=\"512\">" << std::endl; 
     return 0;
 }
