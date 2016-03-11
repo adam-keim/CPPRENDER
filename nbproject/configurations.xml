@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>geometry.h</itemPath>
+      <itemPath>object.h</itemPath>
       <itemPath>pcoords.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -42,6 +43,8 @@
       </item>
       <item path="main.cc" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="object.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="pcoords.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
@@ -69,6 +72,8 @@
       </item>
       <item path="main.cc" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="object.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="pcoords.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
@@ -83,6 +88,8 @@
       <item path="geometry.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="object.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="pcoords.h" ex="false" tool="3" flavor2="0">
       </item>
