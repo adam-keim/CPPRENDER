@@ -190,10 +190,10 @@ bool computePixelCoordinates(
         const Vec3f &pWorld,
         const Matrix44f &WtC,
         const float &l,
-        const float &t,
         const float &r,
+        const float &t,
         const float &b,
-        const float &NCP,
+        const float &near,
         const int &imageWidth,
         const int &imageHeight,
         Vec2i &pRaster) {
@@ -202,39 +202,69 @@ bool computePixelCoordinates(
     WtC.multVecMatrix(pWorld, pCamera);
     //Convert to screen space
     Vec2f pScreen;
-    pScreen.x = (pCamera.x / -pCamera.z);
-    pScreen.y = (pCamera.y / -pCamera.z);
+    pScreen.x = pCamera.x / -pCamera.z * near;
+    pScreen.y = pCamera.y / -pCamera.z * near;
     //Check if on screen
-    if (abs(pScreen.x) >= canvasWidth / 2 || abs(pScreen.y >= canvasHeight / 2))
-        return false;
+
     //Normalize
-    Vec2f pNdc;
-    pNdc.x = (pScreen.x + canvasWidth / 2) / canvasWidth;
-    pNdc.y = (pScreen.y + canvasHeight / 2) / canvasHeight;
+    Vec2f pNDC;
+    pNDC.x = (pScreen.x + r) / (2 * r);
+    pNDC.y = (pScreen.y + t) / (2 * t);
+    pRaster.x = (pNDC.x * imageWidth);
+    pRaster.y = ((1 - pNDC.y) * imageHeight);
     //Convert to Raster
-    pRaster.x = floor(pNdc.x * imageWidth);
-    pRaster.y = floor((1 - pNdc.y) * imageHeight);
-    return true;
+    bool visible = true;
+    if (pScreen.x < l || pScreen.x > r || pScreen.y < b || pScreen.y > t)
+        visible = false;
+    return visible;
 }
 //Camera Parameters
 static const float inchesToMm = 25.4;
-float focalLength = 35; 
+float focalLength = 12;
 // 35mm Full Aperture
-float filmApertureWidth = 0.980; 
-float filmApertureHeight = 0.735; 
-static const float inchToMm = 25.4; 
-float nearClippingPlane = 0.1; 
-float farClipingPlane = 1000; 
- 
- 
+float filmApertureWidth = 0.980;
+float filmApertureHeight = 0.735;
+static const float inchToMm = 25.4;
+float nearClippingPlane = 0.1;
+float farClipingPlane = 1000;
+
 int main() {
     uint32_t imageWidth = 512, imageHeight = 512;
+    float deviceAspectRatio = imageWidth/imageHeight;
     //Calculate clipping vertices in all 4 directions
-    float top = ((filmApertureHeight * inchToMm / 2) / focalLength) * nearClippingPlane; 
-    float bottom = -top; 
-    float filmAspectRatio = filmApertureWidth / filmApertureHeight; 
-    float right = bottom * filmAspectRatio; 
-    float left = -right; 
+    float top = ((filmApertureHeight * inchToMm / 2) / focalLength) * nearClippingPlane;
+    float bottom = -top;
+    float filmAspectRatio = filmApertureWidth / filmApertureHeight;
+    float right = bottom * filmAspectRatio;
+    float left = -right;
+    float xscale = 1;
+    float yscale = 1;
+    enum GateMethod {kFill = 0, kOverscan};
+    GateMethod fitFilm = kFill;
+    switch (fitFilm) {
+        default:
+        case kFill:
+            if (filmAspectRatio > deviceAspectRatio) {
+                xscale = deviceAspectRatio / filmAspectRatio;
+            }
+            else {
+                yscale = filmAspectRatio / deviceAspectRatio;
+            }
+            break;
+        case kOverscan:
+            if (filmAspectRatio > deviceAspectRatio) {
+                yscale = filmAspectRatio / deviceAspectRatio;
+            }
+            else {
+                xscale = deviceAspectRatio / filmAspectRatio;
+            }
+            break;
+    }
+
+    right *= xscale;
+    top *= yscale;
+    left = -right;
+    bottom = -top;
     printf("bottom, left top, right %f %f %f %f", bottom, left, top, right);
     //This matrix was outputted using the blender console
     Matrix44f cameraToWorld(0.871214, 0, -0.490904, 0, -0.192902, 0.919559, -0.342346, 0, 0.451415, 0.392953, 0.801132, 0, 14.777467, 29.361945, 27.993464, 1);
@@ -248,9 +278,9 @@ int main() {
         const Vec3f &world1 = verts[tris[i * 3 + 1]];
         const Vec3f &world2 = verts[tris[i * 3 + 2]];
         Vec2i rc0, rc1, rc2;
-        computePixelCoordinates(world0, WtC, left, right, top, bottom, imageWidth, imageHeight, rc0);
-        computePixelCoordinates(world1, WtC, left, right, top, bottom, imageWidth, imageHeight, rc1);
-        computePixelCoordinates(world2, WtC, left, right, top, bottom, imageWidth, imageHeight, rc2);
+        computePixelCoordinates(world0, WtC, left, right, top, bottom, nearClippingPlane, imageWidth, imageHeight, rc0);
+        computePixelCoordinates(world1, WtC, left, right, top, bottom, nearClippingPlane, imageWidth, imageHeight, rc1);
+        computePixelCoordinates(world2, WtC, left, right, top, bottom, nearClippingPlane, imageWidth, imageHeight, rc2);
         //std::cout << rc0 << rc1 << rc2;
         ofs << "<line x1=\"" << rc0.x << "\" y1=\"" << rc0.y << "\" x2=\"" << rc1.x << "\" y2=\"" << rc1.y << "\" style=\"stroke:rgb(0,0,255);stroke-width:1\" />\n";
         ofs << "<line x1=\"" << rc1.x << "\" y1=\"" << rc1.y << "\" x2=\"" << rc2.x << "\" y2=\"" << rc2.y << "\" style=\"stroke:rgb(0,255,0);stroke-width:1\" />\n";
@@ -258,6 +288,6 @@ int main() {
     }
     ofs << "</svg>";
     ofs.close();
-    
+
     return 0;
 }
