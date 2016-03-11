@@ -1,3 +1,6 @@
+#pragma once
+
+using namespace std;
 bool computePixelCoordinates(
         const Vec3f &pWorld,
         const Matrix44f &WtC,
