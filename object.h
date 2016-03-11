@@ -1,4 +1,7 @@
-//public:
+#ifndef OBJECT_H
+#define OBJECT_H
+
+using namespace std;
 //EXAMPLE GEOMETRY STOLEN FROM SCRATCHAPIXEL
 const Vec3f verts[146] = {
     { 0, 39.034, 0},
@@ -178,3 +181,5 @@ const uint32_t tris[numTris * 3] = {
     107, 137, 109, 109, 139, 140, 109, 140, 112, 112, 140, 141, 112, 142, 143,
     112, 143, 116, 116, 143, 144, 116, 145, 119
 };
+#endif	// OBJECT_H
+
