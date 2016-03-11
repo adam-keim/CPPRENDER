@@ -283,9 +283,9 @@ int main() {
         computePixelCoordinates(world1, WtC, left, right, top, bottom, nearClippingPlane, imageWidth, imageHeight, rc1);
         computePixelCoordinates(world2, WtC, left, right, top, bottom, nearClippingPlane, imageWidth, imageHeight, rc2);
         //std::cout << rc0 << rc1 << rc2;
-        ofs << "<line x1=\"" << rc0.x << "\" y1=\"" << rc0.y << "\" x2=\"" << rc1.x << "\" y2=\"" << rc1.y << "\" style=\"stroke:rgb(0,0,255);stroke-width:1\" />\n";
-        ofs << "<line x1=\"" << rc1.x << "\" y1=\"" << rc1.y << "\" x2=\"" << rc2.x << "\" y2=\"" << rc2.y << "\" style=\"stroke:rgb(0,255,0);stroke-width:1\" />\n";
-        ofs << "<line x1=\"" << rc2.x << "\" y1=\"" << rc2.y << "\" x2=\"" << rc0.x << "\" y2=\"" << rc0.y << "\" style=\"stroke:rgb(255,0,0);stroke-width:1\" />\n";
+        ofs << "<line x1=\"" << rc0.x << "\" y1=\"" << rc0.y << "\" x2=\"" << rc1.x << "\" y2=\"" << rc1.y << "\" style=\"stroke:rgba(255,0,0,.5);stroke-width:1\" />\n";
+        ofs << "<line x1=\"" << rc1.x << "\" y1=\"" << rc1.y << "\" x2=\"" << rc2.x << "\" y2=\"" << rc2.y << "\" style=\"stroke:rgba(0,255,0,.5);stroke-width:1\" />\n";
+        ofs << "<line x1=\"" << rc2.x << "\" y1=\"" << rc2.y << "\" x2=\"" << rc0.x << "\" y2=\"" << rc0.y << "\" style=\"stroke:rgba(0,0,255,.5);stroke-width:1\" />\n";
     }
     ofs << "</svg>";
     ofs.close();
