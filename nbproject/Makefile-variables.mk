@@ -22,14 +22,6 @@ CND_ARTIFACT_PATH_Release=dist/Release/MinGW-Windows/cpprender
 CND_PACKAGE_DIR_Release=dist/Release/MinGW-Windows/package
 CND_PACKAGE_NAME_Release=cpprender.tar
 CND_PACKAGE_PATH_Release=dist/Release/MinGW-Windows/package/cpprender.tar
-# NewConfiguration configuration
-CND_PLATFORM_NewConfiguration=MinGW-Windows
-CND_ARTIFACT_DIR_NewConfiguration=dist/NewConfiguration/MinGW-Windows
-CND_ARTIFACT_NAME_NewConfiguration=cpprender
-CND_ARTIFACT_PATH_NewConfiguration=dist/NewConfiguration/MinGW-Windows/cpprender
-CND_PACKAGE_DIR_NewConfiguration=dist/NewConfiguration/MinGW-Windows/package
-CND_PACKAGE_NAME_NewConfiguration=cpprender.tar
-CND_PACKAGE_PATH_NewConfiguration=dist/NewConfiguration/MinGW-Windows/package/cpprender.tar
 #
 # include compiler specific variables
 #
