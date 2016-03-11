@@ -1,3 +1,4 @@
+//public:
 //EXAMPLE GEOMETRY STOLEN FROM SCRATCHAPIXEL
 const Vec3f verts[146] = {
     { 0, 39.034, 0},
