@@ -5,6 +5,7 @@
 #include <cmath> 
 
 #include "geometry.h"
+#include "pcoords.h"
 //EXAMPLE GEOMETRY STOLEN FROM SCRATCHAPIXEL
 const Vec3f verts[146] = {
     { 0, 39.034, 0},
@@ -186,38 +187,7 @@ const uint32_t tris[numTris * 3] = {
 };
 //This function is some of the finest code I have ever written
 
-bool computePixelCoordinates(
-        const Vec3f &pWorld,
-        const Matrix44f &WtC,
-        const float &l,
-        const float &r,
-        const float &t,
-        const float &b,
-        const float &near,
-        const int &imageWidth,
-        const int &imageHeight,
-        Vec2i &pRaster) {
-    Vec3f pCamera;
-    //Compute world to camera matrix
-    WtC.multVecMatrix(pWorld, pCamera);
-    //Convert to screen space
-    Vec2f pScreen;
-    pScreen.x = pCamera.x / -pCamera.z * near;
-    pScreen.y = pCamera.y / -pCamera.z * near;
-    //Check if on screen
 
-    //Normalize
-    Vec2f pNDC;
-    pNDC.x = (pScreen.x + r) / (2 * r);
-    pNDC.y = (pScreen.y + t) / (2 * t);
-    pRaster.x = (pNDC.x * imageWidth);
-    pRaster.y = ((1 - pNDC.y) * imageHeight);
-    //Convert to Raster
-    bool visible = true;
-    if (pScreen.x < l || pScreen.x > r || pScreen.y < b || pScreen.y > t)
-        visible = false;
-    return visible;
-}
 //Camera Parameters
 static const float inchesToMm = 25.4;
 float focalLength = 12;
