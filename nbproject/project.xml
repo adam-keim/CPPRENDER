@@ -10,7 +10,9 @@
             <header-extensions>h</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
-            <sourceRootList/>
+            <sourceRootList>
+                <sourceRootElem>.</sourceRootElem>
+            </sourceRootList>
             <confList>
                 <confElem>
                     <name>Debug</name>
@@ -20,9 +22,16 @@
                     <name>Release</name>
                     <type>1</type>
                 </confElem>
+                <confElem>
+                    <name>NewConfiguration</name>
+                    <type>1</type>
+                </confElem>
             </confList>
             <formatting>
-                <project-formatting-style>false</project-formatting-style>
+                <project-formatting-style>true</project-formatting-style>
+                <c-style>GNU|GNU</c-style>
+                <cpp-style>GNU|GNU</cpp-style>
+                <header-style>GNU|GNU</header-style>
             </formatting>
         </data>
     </configuration>

@@ -230,7 +230,7 @@ float farClipingPlane = 1000;
 
 int main() {
     uint32_t imageWidth = 512, imageHeight = 512;
-    float deviceAspectRatio = imageWidth/imageHeight;
+    float deviceAspectRatio = imageWidth / imageHeight;
     //Calculate clipping vertices in all 4 directions
     float top = ((filmApertureHeight * inchToMm / 2) / focalLength) * nearClippingPlane;
     float bottom = -top;
@@ -239,23 +239,24 @@ int main() {
     float left = -right;
     float xscale = 1;
     float yscale = 1;
-    enum GateMethod {kFill = 0, kOverscan};
+
+    enum GateMethod {
+        kFill = 0, kOverscan
+    };
     GateMethod fitFilm = kFill;
     switch (fitFilm) {
         default:
         case kFill:
             if (filmAspectRatio > deviceAspectRatio) {
                 xscale = deviceAspectRatio / filmAspectRatio;
-            }
-            else {
+            } else {
                 yscale = filmAspectRatio / deviceAspectRatio;
             }
             break;
         case kOverscan:
             if (filmAspectRatio > deviceAspectRatio) {
                 yscale = filmAspectRatio / deviceAspectRatio;
-            }
-            else {
+            } else {
                 xscale = deviceAspectRatio / filmAspectRatio;
             }
             break;
