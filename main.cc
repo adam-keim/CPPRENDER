@@ -247,18 +247,10 @@ int main() {
     switch (fitFilm) {
         default:
         case kFill:
-            if (filmAspectRatio > deviceAspectRatio) {
-                xscale = deviceAspectRatio / filmAspectRatio;
-            } else {
-                yscale = filmAspectRatio / deviceAspectRatio;
-            }
+            if (filmAspectRatio > deviceAspectRatio) { xscale = deviceAspectRatio / filmAspectRatio; } else { yscale = filmAspectRatio / deviceAspectRatio; }
             break;
         case kOverscan:
-            if (filmAspectRatio > deviceAspectRatio) {
-                yscale = filmAspectRatio / deviceAspectRatio;
-            } else {
-                xscale = deviceAspectRatio / filmAspectRatio;
-            }
+            if (filmAspectRatio > deviceAspectRatio) { yscale = filmAspectRatio / deviceAspectRatio; } else { xscale = deviceAspectRatio / filmAspectRatio; }
             break;
     }
 
